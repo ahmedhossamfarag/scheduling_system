@@ -1,0 +1,59 @@
+Project Description
+Your task is to develop a scheduling system for knockout tennis tournaments. In a knockout tournament,
+(also known as single elimination tournament), players play head-to-head matches. The match winner
+advances to the next round while the loser is eliminated from further competition. In this project, you
+will assume that any necessary qualifying matches have already been held and the number of players
+given to you is always a power of two. For example, a knockout tournament between 8 (23) players should
+be scheduled as a three-round tournament as follows:
+a) In the quarter finals round, 4 matches are held, resulting in the elimination of 4 players. The 4
+winners advance to the semi finals round.
+b) In the semi finals round, 2 matches are held, resulting in the elimination of 2 players. The 2 winners
+advance to the final round.
+c) In the final round, 1 match is held to determine the champion of the tournament.
+In order to improve the fairness of the schedule as well as retain the interest of the fans, sponsors and
+media, the organizers of a tournament typically assign seeded positions in the schedule. Seeds are assigned
+to players according to their measurable strengths and past performance, such as ATP rankings (see for
+example: http://www.atpworldtour.com/Rankings/Singles.aspx). The strongest player gets seed 1,
+the 2nd strongest player gets seed 2, etc. . .
+Implement the following Prolog predicates according to the given description:
+
+
+a) The predicate schedule_round(N,R) which holds according to the following conditions:
+• R is a valid list of matches to be played in a round of N players. The matches scheduled must
+observe the delayed confrontation rule. Delayed Confrontation means that two players
+among the top 2i players shall never meet in a match until the number of players competing
+has been reduced to 2i or fewer. In other words, the better players will not have to face one
+another until it can no longer be avoided 1. For instance, the top two strongest players (seed
+1 and seed 2) will only meet in the final round and not earlier.
+• R will have length equal to N=2 and each match in R should be represented using the following
+data structure:
+game(S1, S2, RN)
+where S1 is the seed of the first player in the match, S2 is the seed of the second player in
+the match and RN is the round name. S1 should be < S2. Rounds are named as follows: final,
+semi_finals, quarter_finals, round_four, round_five, . . .
+For example:
+game(1, 5, quarter_finals)
+• R should be sorted in ascending order. A match game(A,B,RN) is considered < another match
+game(C,D,RN) if A < C.
+• Each player (with seed between 1, 2, . . . , N inclusive) plays exactly one match in the round.
+
+
+b) Using the predicate schedule_round(N,R) (part a), implement the predicate schedule_rounds(N,S)
+which succeeds if S is a valid schedule of all rounds in a tournament of N players. S should be a list
+of lists (each representing the schedule of a round starting with the first round in the tournament
+up till the final round).
+
+
+c) The system is also required to schedule the different matches so that the entire tournament will
+span a certain number of days. Implement a predicate tournament(N,D,S). This predicate holds if
+S is the schedule resulting from scheduling all matches of the different rounds for a tournament of
+N players, such that it spans D days. S should be a list of D lists (each representing the schedule of
+one day in the tournament from the first till the last day). The schedule has to satisfy the following
+constraints:
+• Every day, at least one match is scheduled and at most three.
+• Different rounds are not allowed to overlap. Only matches of the same round are allowed to
+take place on the same day.
+• Since the matches in which the top two players play attract a huge number of fans and
+widespread media coverage, seed 1 and seed 2 should always be scheduled to play on different
+days (with the exception of the final round match, of course, where they play on the same day
+against each other)
